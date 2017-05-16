@@ -1,0 +1,26 @@
+spring.application.name: CONFIG-SERVER
+
+server.port: 8084
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8080/eureka/
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 50
+
+spring.cloud.config.server.git:
+  uri: https://github.com/Andrei-Khadziukou/petclinic-properties
+  #TODO check how it works for the case of running from jar-file
+  basedir: repo
+  cloneOnStart: true
+  force-pull: true
+
+security.user:
+  name: test-user
+  password: test-password

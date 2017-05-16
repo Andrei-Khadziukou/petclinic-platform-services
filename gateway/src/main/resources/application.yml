@@ -1,0 +1,37 @@
+info.component: Gateway Server
+
+spring.application.name: GATEWAY-SERVER
+
+server.port: 8083
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8080/eureka/
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 50
+
+zuul:
+  prefix: /api
+  routes:
+    orders:
+      paths: /orders/**
+      serviceId: ORDER-SERVICE
+      stripPrefix: false
+    services:
+      path: /services/**
+      serviceId: CLINIC-SERVICE
+      stripPrefix: false
+    animals:
+      path: /animals/**
+      serviceId: CLINIC-SERVICE
+      stripPrefix: false
+    clinics:
+      path: /clinics/**
+      serviceId: CLINIC-SERVICE
+      stripPrefix: false
