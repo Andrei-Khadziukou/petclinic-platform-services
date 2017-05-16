@@ -1,6 +1,6 @@
 info.component: Service Discovery Server
 
-spring.application.name: EUREKA-SERVER
+spring.application.name: SERVICE-DISCOVERY-SERVER
 
 server.port: 8080
 
