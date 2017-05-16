@@ -1,0 +1,21 @@
+version = '0.0.1-SNAPSHOT'
+
+// Spring boot builds executable jar file
+springBoot {
+    classifier = 'exec'
+}
+
+// Spring boot identifies "Main-Class" property automatically by spring-boot plugin - no need to specify it
+jar {
+    manifest {
+        attributes "Implementation-Title": project.name, "Implementation-Version": version
+    }
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.cloud:spring-cloud-starter-eureka-server')
+    runtime('org.springframework.boot:spring-boot-devtools')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}

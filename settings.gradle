@@ -1,0 +1,5 @@
+rootProject.name = 'petclinic-platform-services'
+
+include 'gateway'
+include 'config'
+include 'service-discovery'
