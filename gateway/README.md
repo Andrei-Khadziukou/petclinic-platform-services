@@ -1,18 +1,20 @@
-# Zuul server for Pet Clinic project
+# Pet Clinic Gateway Server
 
-It provides routing abilities for calls from UI.
-Repository: https://github.com/Andrei-Khadziukou/petclinic-zuul.
+The proxy server based on Netflox Zuul and provides routing abilities for all REST calls.
 
-After running this server calls to this application will be redirected to services
+## How To Run
+1. Use Gradle to run by `gradlew bootRun` in the root sub-project folder.
+2. Use jar file to run by `java -jar build/libs/*-exec.jar` in the root sub-project folder.
+The application starts on the port defined in the application.yml file `server.port: <port>`.
+
+After running this server calls to this application will be redirected to services:
 * `http://<server-host>:<server-port>/api/orders` will be redirected to `ORDER_SERVICE`
 * `http://<server-host>:<server-port>/api/services` will be redirected to `CLIENT_SERVICE`
 * `http://<server-host>:<server-port>/api/animals` will be redirected to `CLIENT_SERVICE`
 * `http://<server-host>:<server-port>/api/clinics` will be redirected to `CLIENT_SERVICE`
 
-**See details about ORDER_SERVICE and CLIENT_SERVICE service in Eureka Pet Server** (https://github.com/Andrei-Khadziukou/petclinic-eureka).
-
-## How it works
-* Run all applications using `gradlew bootRun` in the project roots (Zuul Server, Eureka server, Order Service and Client Service)
-* Run browser
+Helth check info:
 * Use the URL `http://localhost:8083/api/orders/health` to get health check information from Order Service
-* Use the URL `http://localhost:8083/api/clinics/health` to get health check information from Client Service (same for URLs: `http://localhost:8083/api/animals/health`, `http://localhost:8083/api/services/health`)
+* Use the URL `http://localhost:8083/api/clinics/health` to get health check information from Client Service
+* Use the URL `http://localhost:8083/api/animals/health` to get health check information from Client Service
+* Use the URL `http://localhost:8083/api/services/health` to get health check information from Client Service
