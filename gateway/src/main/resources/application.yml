@@ -18,7 +18,14 @@ eureka:
 
 zuul:
   prefix: /api
+  # Zuul passes user requests with all headers besides specified (Cookie, Set-Cookie). It needs to save Authorization
+  # header in user requests. Default value for sensitiveHeaders parameter is 'Cookie,Set-Cookie,Authorization'.
+  sensitiveHeaders: Cookie,Set-Cookie
   routes:
+    auth:
+      path: /uaa/**
+      serviceId: AUTH-SERVER
+      stripPrefix: false
     orders:
       paths: /orders/**
       serviceId: ORDER-SERVICE
