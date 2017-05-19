@@ -2,16 +2,25 @@ info.component: Service Discovery Server
 
 spring.application.name: SERVICE-DISCOVERY-SERVER
 
-server.port: 8080
+server.port: ${SERVICE_DISCOVERY_PORT:8080}
 
 eureka:
+  instance:
+    hostname: ${SERVICE_DISCOVERY_HOST:localhost}
   client:
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
-      defaultZone: http://localhost:8080/eureka/
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
     waitTimeInMsWhenSyncEmpty: 0
     enableSelfPreservation: false
     healthcheck:
       enabled: true
+
+---
+#spring.profile: multipeers
+#eureka:
+# Default values are needed because Spring tries to find those variables on start up stage
+  #instance.hostname: ${CURRENT_PEER_HOST_NAME:none}
+  #client.serviceUrl.defaultZone: ${PEER_HOSTS:none}
