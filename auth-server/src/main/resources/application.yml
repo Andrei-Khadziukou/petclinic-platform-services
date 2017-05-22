@@ -1,0 +1,21 @@
+info:
+  component: Authentication Service
+
+spring:
+  application:
+     name: AUTH-SERVER
+  freemarker:
+    enabled: false
+  thymeleaf:
+    cache: false
+
+server:
+  context-path: /uaa
+  port: 8085
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${SERVICE_DISCOVERY_SERVER_HOST:localhost}:${SERVICE_DISCOVERY_SERVER_PORT:8080}/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 10
