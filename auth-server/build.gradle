@@ -1,5 +1,7 @@
 version = '0.0.1.SNAPSHOT'
 
+apply plugin: 'com.epam.petclinic.database'
+
 // Spring boot builds executable jar file
 springBoot {
     classifier = 'exec'
@@ -16,6 +18,9 @@ dependencies {
     compile('org.springframework.cloud:spring-cloud-starter-eureka')
     compile('org.springframework.cloud:spring-cloud-starter-oauth2')
     compile('org.springframework.security:spring-security-jwt')
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
+
+    runtime('org.postgresql:postgresql')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

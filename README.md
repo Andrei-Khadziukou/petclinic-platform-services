@@ -8,4 +8,7 @@ It is responsible for providing configuration for other services. See more detai
 It is responsible for hiding other services from external world. See more details [here](/gateway/).
 
 ## Service discovery server
-It is responsible for service discovering, other services registration on it. See more details [here](/service-discovery/). 
+It is responsible for service discovering, other services registration on it. See more details [here](/service-discovery/).
+
+## Authentication server
+It is responsible for storing information about authentication and authorization. See more details [here](/auth-server/).
