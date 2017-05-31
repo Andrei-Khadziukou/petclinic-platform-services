@@ -1,13 +1,20 @@
-package com.epam.petclinic.authentication;
+package com.epam.petclinic.authentication.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import javax.sql.DataSource;
+
 @Configuration
-class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     @Bean
@@ -20,10 +27,6 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //TODO find the way to pass encrypted values as passwords
-        auth.inMemoryAuthentication()
-                .withUser("reader").password("reader").authorities("user")
-                .and()
-                .withUser("writer").password("writer").authorities("admin");
+        auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(new Md5PasswordEncoder());
     }
 }

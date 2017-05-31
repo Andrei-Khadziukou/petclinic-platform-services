@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="28-05-2017" author="andrei_astaschenko">
+        <createTable tableName="oauth_client_details">
+            <column name="client_id" type="varchar(255)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="resource_ids" type="varchar(255)"/>
+            <column name="client_secret" type="varchar(255)"/>
+            <column name="scope" type="varchar(255)"/>
+            <column name="authorized_grant_types" type="varchar(255)"/>
+            <column name="web_server_redirect_uri" type="varchar(255)"/>
+            <column name="authorities" type="varchar(255)"/>
+            <column name="access_token_validity" type="integer"/>
+            <column name="refresh_token_validity" type="integer"/>
+            <column name="additional_information" type="varchar(4096)"/>
+            <column name="autoapprove" type="boolean" defaultValue="true"/>
+        </createTable>
+        <createTable tableName="users">
+            <column name="username" type="varchar(31)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enabled" type="boolean" defaultValue="true"/>
+        </createTable>
+        <createTable tableName="authorities">
+            <column name="username" type="varchar(31)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="authority" type="varchar(31)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="29-05-2017" author="andrei_astaschenko">
+        <sql>
+            INSERT INTO users (username, password) VALUES ('reader', md5('reader'));
+        </sql>
+        <sql>
+            INSERT INTO users (username, password) VALUES ('writer', md5('writer'));
+        </sql>
+        <insert tableName="authorities">
+            <column name="username" value="reader"/>
+            <column name="authority" value="user"/>
+        </insert>
+        <insert tableName="authorities">
+            <column name="username" value="writer"/>
+            <column name="authority" value="admin"/>
+        </insert>
+        <insert tableName="oauth_client_details">
+            <column name="client_id" value="ui"/>
+            <column name="resource_ids" value="ORDER-SERVICE,CLINIC-SERVICE,GATEWAY-SERVICE"/>
+            <column name="client_secret" value="123"/>
+            <column name="scope" value="read"/>
+            <column name="authorized_grant_types" value="client_credentials,password,refresh_token"/>
+            <column name="authorities" value="user"/>
+            <column name="access_token_validity" value="300"/>
+            <column name="refresh_token_validity" value="600"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

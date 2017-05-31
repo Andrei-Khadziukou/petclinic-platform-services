@@ -1,4 +1,4 @@
-package com.epam.petclinic.authentication;
+package com.epam.petclinic.authentication.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +15,8 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
+import javax.sql.DataSource;
+
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
@@ -24,6 +26,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Autowired
     private JwtAccessTokenConverter jwtAccessTokenConverter;
+
+    @Autowired
+    private DataSource dataSource;
 
     /**
      * Configures permissions for clients in memory of authentication server and passes the authorities for
@@ -38,18 +43,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         //TODO encrypt the value for 'secret'
-        clients.inMemory()
-                .withClient("ui")
-                .secret("123")
-                .resourceIds("ORDER-SERVICE", "CLINIC-SERVICE", "GATEWAY-SERVICE")
-                // TODO: investigate 'scopes' influence on client permissions
-                .scopes("create", "read", "update", "delete")
-                .autoApprove(true)
-                .authorities("admin")
-                .authorizedGrantTypes("implicit", "refresh_token", "password", "authorization_code",
-                        "client_credentials")
-                .refreshTokenValiditySeconds(600)
-                .accessTokenValiditySeconds(300);
+        //TODO: investigate 'scopes' influence on client permissions
+        //TODO: investigate changing schema for storing 'auth_server' tables
+        clients.jdbc(dataSource);
     }
 
     /**

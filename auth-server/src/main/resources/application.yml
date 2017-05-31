@@ -2,6 +2,10 @@ info:
   component: Authentication Service
 
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/auth_server
+    username: pc_auth_admin
+    password: root
   application:
      name: AUTH-SERVER
   freemarker:
